@@ -1,0 +1,18 @@
+---
+- hosts: webservers 
+  become: True
+  tasks:
+    - name: Install packages
+      yum:
+        name: "httpd"
+        state: "present"
+    - name: Start Apache server
+      service:
+        name: httpd
+        state: started
+        enabled: True
+    - name: Deploy static website
+      copy:
+        src: /var/lib/jenkins/workspace/demo/target/baeldung-0.0.1-SNAPSHOT.jar
+        dest: /var/www/html/
+...
